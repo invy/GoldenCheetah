@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Jon Beverley (jon@csdl.biz)
+ * Copyright (c) 2015 Igor Ingultsov (ingultsov@gmail.com)
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -22,9 +22,6 @@
 #include "HelpWhatsThis.h"
 #include <algorithm>
 #include <QVector>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
 
 // Config widget used by the Preferences/Options config panes
 class FixSlope;
@@ -78,13 +75,6 @@ class FixSlope : public DataProcessor {
 };
 
 static bool FixSlopeAdded = DataProcessorFactory::instance().registerProcessor(QString("fix slope errors"), new FixSlope());
-
-double avgAlt(RideFile *ride, int i, int vals) {
-    double s = 0;
-    for(int j = i - vals/2; j < i+vals/s; ++j)
-        s += ride->dataPoints()[j]->alt;
-    return s/(double)vals;
-}
 
 double filterAltData(double alt, double altp, double a) {
     return altp + a * (alt - altp);
